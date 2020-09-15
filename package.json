@@ -1,0 +1,19 @@
+{
+  "name": "twitterBot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "mongoose": "^5.10.5",
+    "node-fetch": "^2.6.1",
+    "puppeteer": "^5.3.0"
+  }
+}
