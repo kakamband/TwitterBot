@@ -6,6 +6,8 @@ const fetch = require("node-fetch");
 
 const username = process.env.LOGINUSERNAME;
 const password = process.env.PASSWORD;
+const twoFactorEmail = "";
+
 
 // Connect this sucker to MongoDB
 // (async () => {
@@ -40,8 +42,9 @@ const password = process.env.PASSWORD;
 
   // Let the beast loose!
   const browser = await puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    headless: true,
+    headless: false,
+    args: ["--no-sandbox", "--disable-setuid-sandbox", "--headless", "--disable-dev-shm-usage"],
+    executablePath: process.env.CHROMIUM_PATH,
   });
   const page = await browser.newPage();
   await page.goto("https://twitter.com/login");
@@ -53,7 +56,18 @@ const password = process.env.PASSWORD;
   await inputs[6].type(password);
 
   const loginButton = await page.$$('[role="button"]');
-  loginButton[0].click();
+  await loginButton[0].click();
+
+  await page.waitForTimeout(3000).then(() => {
+    console.log("Waited for 3s");
+  });
+
+  // const twoFactorInputs = await page.$$("input");
+  // await twoFactorInputs[5].type(twoFactorEmail);
+  // await twoFactorInputs[6].type(password);
+
+  // const loginButton2 = await page.$$('[role="button"]');
+  // await loginButton2[0].click();
 
   await page.waitForTimeout(4000).then(async () => {
     console.log("Waited 4 seconds!");
